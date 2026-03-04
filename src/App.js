@@ -4,7 +4,13 @@ import Todos from './MyComponents/Todos';
 import Footer from './MyComponents/Footer';
 import AddTodo from './MyComponents/AddTodo';
 import React,{useState} from 'react' 
-function App() {
+function App() { 
+  let initTodo;
+  if(localStorage.getItem("todos")===null){
+    initTodo =[];
+  }else{
+   initTodo = JSON.parse(localStorage.getItem("todos"));
+  }
 const onDelete = (todo)=>{
   console.log("I am onDelete of todo", todo);
   // Deleting this way in react does not work  // let index = todos.indexOf(todo);
@@ -13,29 +19,25 @@ const onDelete = (todo)=>{
   setTodos(todos.filter((e)=>{
     return e!==todo;
   }))
+  localStorage.setItem("todos", JSON.stringify(todos));
 }
 
- const[todos, setTodos] = useState([
-    {
-      sno: 1,
-      title: "Go to the market",
-      desc: "You need to go to the market to get this job done"
-    },
-    {
-      sno: 2,
-      title: "Go to the mall",
-      desc: "You need to go to the mall to get this job done"
-    },
-    {
-      sno: 3,
-      title: "Go to the school",
-      desc: "You need to go to the school to get this job done"
+ const[todos, setTodos] = useState([initTodo]);
+    const addTodo = (title, desc) => {
+    const sno = todos.length ? todos[todos.length - 1].sno + 1 : 1;
+    const newTodo = { sno, title, desc };
+    setTodos([...todos, newTodo]); 
+    console.log("Added todo:", newTodo);
+    if (todos.length === 0) {
+      localStorage.setItem("todos", JSON.stringify([newTodo]));
+    } else {
+      localStorage.setItem("todos", JSON.stringify([...todos, newTodo]));
     }
-  ]);
+  }
   return (
     <>
       <Header title="My Todos List" Searchbar={false}/>
-      <AddTodo/>
+      <AddTodo addTodo={addTodo}/>
       <Todos todos={todos} onDelete={onDelete}/>
       <Footer/>
     </>
