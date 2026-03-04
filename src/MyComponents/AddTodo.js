@@ -6,13 +6,13 @@ const AddTodo = () => {
       <h3>Add a Todo</h3>
       <form>
         <div className="mb-3">
-          <label htmlFor="exampleInputEmail1" className="form-label">
-            Email address
+          <label htmlFor="title" className="form-label">
+            Todo Title
           </label>
           <input
-            type="email"
+            type="text"
             className="form-control"
-            id="exampleInputEmail1"
+            id="title"
             aria-describedby="emailHelp"
           />
           <div id="emailHelp" className="form-text">
@@ -30,12 +30,16 @@ const AddTodo = () => {
           />
         </div>
         <div className="mb-3 form-check">
-          <input type="checkbox" className="form-check-input" id="exampleCheck1" />
+          <input
+            type="checkbox"
+            className="form-check-input"
+            id="exampleCheck1"
+          />
           <label className="form-check-label" htmlFor="exampleCheck1">
             Check me out
           </label>
         </div>
-        <button type="submit" className="btn btn-primary">
+        <button type="submit" className="btn btn-sm btn-success">
           Submit
         </button>
       </form>
